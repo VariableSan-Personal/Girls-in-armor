@@ -1,6 +1,34 @@
-@import "tailwindcss" theme(static);
-@import "@nuxt/ui";
+@import 'tailwindcss' theme(static);
+@import '@nuxt/ui';
 
-@theme {
-  --font-sans: 'Public Sans', sans-serif;
+@theme static {
+	--font-sans: 'Public Sans', sans-serif;
+
+	--ui-primary: #14b8a6;
+	--ui-secondary: #64748b;
+	--ui-success: #22c55e;
+	--ui-info: #3b82f6;
+	--ui-warning: #eab308;
+	--ui-error: #ef4444;
+	--ui-neutral: #e5e7eb;
+	--ui-bg: #f9fafb;
+	--ui-text: #1f2937;
+
+	--color-primary: var(--ui-primary);
+	--color-secondary: var(--ui-primary);
+}
+
+.dark {
+	--ui-primary: #06b6d4;
+	--ui-secondary: #94a3b8;
+	--ui-success: #16a34a;
+	--ui-info: #2563eb;
+	--ui-warning: #ca8a04;
+	--ui-error: #dc2626;
+	--ui-neutral: #1e293b;
+	--ui-bg: #0f172a;
+	--ui-text: #e5e7eb;
+
+	--color-primary: var(--ui-primary);
+	--color-secondary: var(--ui-primary);
 }
