@@ -10,7 +10,7 @@ const meta = {
 export default defineNuxtConfig({
 	app: {
 		head: {
-			link: [{ rel: 'icon', type: 'image/png', href: '' }],
+			link: [{ rel: 'icon', type: 'image/png', href: 'shield.svg' }],
 			title: meta.title,
 			meta: [
 				{ key: 'description', name: 'description', content: meta.description },
@@ -28,7 +28,7 @@ export default defineNuxtConfig({
 	devtools: { enabled: false },
 
 	alias: {
-		'@': fileURLToPath(new URL('./', import.meta.url)),
+		'@': fileURLToPath(new URL('./app', import.meta.url)),
 	},
 
 	modules: [
@@ -46,7 +46,9 @@ export default defineNuxtConfig({
 	css: ['~/assets/css/main.css'],
 
 	runtimeConfig: {
-		public: {},
+		public: {
+			baseUrl: '/api',
+		},
 	},
 
 	i18n: {
@@ -65,7 +67,12 @@ export default defineNuxtConfig({
 	},
 
 	icon: {
-		customCollections: [],
+		customCollections: [
+			{
+				prefix: 'custom',
+				dir: './public',
+			},
+		],
 	},
 
 	future: {
