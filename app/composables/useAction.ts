@@ -1,5 +1,3 @@
-import swal from 'sweetalert2'
-
 export function useAction() {
 	const userStore = useUserStore()
 	const mainStore = useGlobalStore()
@@ -7,7 +5,9 @@ export function useAction() {
 	const { setLocale, locale, availableLocales } = useI18n()
 
 	const logout = async () => {
-		const userConfirm = await swal.fire({
+		const { $swal } = useNuxtApp()
+
+		const userConfirm = await $swal.fire({
 			title: 'Do you want to log out?',
 			icon: 'warning',
 			showCancelButton: true,
