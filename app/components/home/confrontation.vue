@@ -1,11 +1,13 @@
 <script lang="ts" setup>
+	import alterSaberImg from '@/assets/images/confrontation/alter-saber.jpg'
+	import saberImg from '@/assets/images/confrontation/saber.jpg'
+
 	type ConfType = 'alter' | 'main'
 	type DescType = 'alterDescription' | 'mainDescription'
 
-	const windowSize = ref({
-		width: 0,
-	})
-	const breakPoint = ref(576)
+	const BREAKPOINT = 576
+
+	const { width: windowWidth } = useWindowSize()
 
 	const alter = ref()
 	const main = ref()
@@ -15,7 +17,7 @@
 	const clickExpand = (params: { refName: ConfType; descName: DescType }) => {
 		const { refName, descName } = params
 
-		if (windowSize.value.width > breakPoint.value) {
+		if (windowWidth.value > BREAKPOINT) {
 			expandDesktop(refName)
 		} else {
 			expandMobile(descName)
@@ -51,7 +53,7 @@
 	}
 
 	const decreaseMobile = (descName: DescType) => {
-		if (windowSize.value.width < breakPoint.value) {
+		if (windowWidth.value < BREAKPOINT) {
 			const $alter = alterDescription.value
 			const $main = mainDescription.value
 			if (descName === 'alterDescription') {
@@ -61,32 +63,17 @@
 			}
 		}
 	}
-
-	const calculateWindowSize = () => {
-		windowSize.value = {
-			width: window.innerWidth,
-		}
-	}
-
-	onMounted(() => {
-		calculateWindowSize()
-		window.addEventListener('resize', calculateWindowSize)
-	})
-
-	onBeforeUnmount(() => {
-		window.removeEventListener('resize', calculateWindowSize)
-	})
 </script>
 
 <template>
 	<section class="section home__confrontation">
-		<v-container>
+		<UContainer>
 			<div class="section__describe">
 				<h2 class="section__describe__headline">Confrontation</h2>
 				<p class="section__describe__subhead">click on the image to get a description</p>
 				<small class="section__describe__additional">
 					to close description click on the
-					{{ windowSize.width > breakPoint ? 'image again' : 'text' }}
+					{{ windowWidth > BREAKPOINT ? 'image again' : 'text' }}
 				</small>
 			</div>
 			<div class="home__confrontation__block">
@@ -94,7 +81,7 @@
 					<div class="home__confrontation__image">
 						<div
 							class="home__confrontation__portrait"
-							:style="{ backgroundImage: `url(images/confrontation/alter-saber.jpg)` }"
+							:style="{ backgroundImage: `url(${alterSaberImg})` }"
 							@click="clickExpand({ refName: 'alter', descName: 'alterDescription' })"
 						></div>
 					</div>
@@ -114,7 +101,7 @@
 					<div class="home__confrontation__image">
 						<div
 							class="home__confrontation__portrait"
-							:style="{ backgroundImage: `url(images/confrontation/saber.jpg)` }"
+							:style="{ backgroundImage: `url(${saberImg})` }"
 							@click="clickExpand({ refName: 'main', descName: 'mainDescription' })"
 						></div>
 					</div>
@@ -130,7 +117,7 @@
 					</div>
 				</div>
 			</div>
-		</v-container>
+		</UContainer>
 	</section>
 </template>
 

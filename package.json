@@ -14,15 +14,15 @@
 		"format": "npm-run-all -p lint:fix prettier"
 	},
 	"dependencies": {
-		"@iconify-json/lucide": "^1.2.34",
-		"@iconify-json/simple-icons": "^1.2.30",
+		"@iconify-json/lucide": "^1.2.35",
+		"@iconify-json/simple-icons": "^1.2.31",
 		"@nuxt/icon": "^1.11.0",
 		"@nuxt/image": "^1.10.0",
 		"@nuxt/scripts": "^0.11.5",
 		"@nuxt/ui": "^3.0.2",
 		"@nuxtjs/i18n": "^9.5.2",
 		"@pinia/nuxt": "^0.10.1",
-		"@unhead/vue": "^2.0.4",
+		"@unhead/vue": "^2.0.5",
 		"@vueuse/nuxt": "^13.0.0",
 		"jwt-decode": "^4.0.0",
 		"nuxt": "^3.16.2",

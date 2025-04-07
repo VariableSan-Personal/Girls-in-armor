@@ -1,5 +1,5 @@
 <template>
-  <h4>here</h4>
+	slider
 </template>
 
 <!-- <script lang="ts" setup>

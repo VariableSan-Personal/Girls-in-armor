@@ -33,8 +33,14 @@ export function useAction() {
 		setLocale(newLocale)
 	}
 
+	const toggleDrawer = () => {
+		mainStore.drawer = !mainStore.drawer
+	}
+
 	return {
 		logout,
 		changeLocale,
+		toggleDrawer,
+		toggleDark: mainStore.toggleDark,
 	}
 }

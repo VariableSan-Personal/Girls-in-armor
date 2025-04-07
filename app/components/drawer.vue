@@ -6,7 +6,7 @@
 <template>
 	<nav
 		:class="globalStore.drawer ? 'translate-x-0' : '-translate-x-full'"
-		class="bg-drawer fixed top-0 left-0 z-30 min-h-full w-7/12 transform px-4 py-12 transition-all duration-300 ease-in-out sm:w-64"
+		class="bg-drawer fixed top-0 left-0 z-[210] min-h-full w-7/12 transform px-4 py-12 transition-all duration-300 ease-in-out sm:w-64"
 	>
 		<ul class="space-y-4">
 			<template v-for="(link, index) in links" :key="index">
@@ -40,7 +40,7 @@
 		leave-active-class="ease-out transition-medium"
 		leave-to-class="opacity-0"
 	>
-		<div v-show="globalStore.drawer" class="fixed inset-0 z-20 cursor-pointer transition-opacity">
+		<div v-show="globalStore.drawer" class="fixed inset-0 z-[200] cursor-pointer transition-opacity">
 			<div
 				class="absolute inset-0 bg-black opacity-50"
 				tabindex="0"

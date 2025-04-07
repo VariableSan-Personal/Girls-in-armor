@@ -1,11 +1,10 @@
 <script setup lang="ts">
 	const links = useLinks()
-	const globalStore = useGlobalStore()
-	const { changeLocale } = useAction()
+	const { changeLocale, toggleDrawer, toggleDark } = useAction()
 </script>
 
 <template>
-	<header class="fixed top-0 left-0 z-10 flex min-h-[52px] w-[100%] items-center">
+	<header class="fixed top-0 left-0 z-[100] flex min-h-[52px] w-[100%] items-center">
 		<UContainer>
 			<div class="flex items-center justify-between gap-4">
 				<div class="flex items-center gap-x-4">
@@ -18,11 +17,7 @@
 						<Icon size="24" name="uil:angle-left-b" />
 					</UButton>
 
-					<UButton
-						variant="link"
-						class="focus:outline-none sm:hidden"
-						@click="globalStore.drawer = !globalStore.drawer"
-					>
+					<UButton variant="link" class="focus:outline-none sm:hidden" @click="toggleDrawer">
 						<Icon name="lucide:align-justify" />
 					</UButton>
 
@@ -60,12 +55,7 @@
 
 					<div class="flex gap-2">
 						<UButton variant="ghost" size="sm" icon="mdi-translate" @click="changeLocale" />
-						<UButton
-							variant="ghost"
-							icon="mdi-theme-light-dark"
-							size="sm"
-							@click="globalStore.toggleDark"
-						/>
+						<UButton variant="ghost" icon="mdi-theme-light-dark" size="sm" @click="toggleDark" />
 					</div>
 				</div>
 			</div>

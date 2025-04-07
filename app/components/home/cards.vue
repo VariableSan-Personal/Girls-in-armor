@@ -1,4 +1,8 @@
-<script lang="ts" setup>
+<template>
+	cards
+</template>
+
+<!-- <script lang="ts" setup>
 	import { CHARACTERS } from '~/constants'
 
 	const onClick = (event: MouseEvent, elType: 'image' | 'quote') => {
@@ -83,3 +87,4 @@
 		}
 	}
 </style>
+ -->
