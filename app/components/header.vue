@@ -12,7 +12,7 @@
 	const isHome = computed(() => route.name === 'index')
 	const scrollBreakPoint = computed(() => height.value / 2)
 
-	const collapsibleHeader = () => {
+	const collapsibleHeader = useDebounceFn(() => {
 		if (!isHome.value) {
 			return
 		}
@@ -37,7 +37,7 @@
 		} else {
 			nav?.classList.remove(scrollDownClass)
 		}
-	}
+	}, 100)
 
 	onMounted(() => {
 		window.addEventListener('scroll', collapsibleHeader)
