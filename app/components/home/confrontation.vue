@@ -1,247 +1,76 @@
-<script lang="ts" setup>
-	import alterSaberImg from '@/assets/images/confrontation/alter-saber.jpg'
-	import saberImg from '@/assets/images/confrontation/saber.jpg'
+<script setup lang="ts">
+	import alterSaberSrc from '@/assets/images/confrontation/alter-saber.jpg'
+	import saberSrc from '@/assets/images/confrontation/saber.jpg'
 
-	type ConfType = 'alter' | 'main'
-	type DescType = 'alterDescription' | 'mainDescription'
+	const active = ref<null | 'alter' | 'saber'>(null)
 
-	const BREAKPOINT = 576
+	const alterQuote =
+		'If you do evil out of a hatred for evil, that rage and hate will merely birth new conflict. Rise above and break the cycle.'
+	const saberQuote =
+		'Of what worth is a king who fails to protect the powerless? True strength lies in defending those who cannot defend themselves.'
 
-	const { width: windowWidth } = useWindowSize()
+	const alterFillColor = '#121212'
+	const saberFillColor = '#e5ecf6'
 
-	const alter = ref()
-	const main = ref()
-	const alterDescription = ref()
-	const mainDescription = ref()
-
-	const clickExpand = (params: { refName: ConfType; descName: DescType }) => {
-		const { refName, descName } = params
-
-		if (windowWidth.value > BREAKPOINT) {
-			expandDesktop(refName)
-		} else {
-			expandMobile(descName)
-		}
-	}
-
-	const expandDesktop = (refName: ConfType) => {
-		const $alter = alter.value
-		const $main = main.value
-		if (refName === 'alter') {
-			$alter.style.zIndex = '10'
-			$alter.classList.toggle('home__confrontation__item--clip-right')
-			$main.classList.remove('home__confrontation__item--clip-left')
-			$main.style.zIndex = '1'
-			$alter.classList.toggle('home__confrontation__item--clip')
-		} else {
-			$main.style.zIndex = '10'
-			$main.classList.toggle('home__confrontation__item--clip-left')
-			$alter.classList.remove('home__confrontation__item--clip-right')
-			$alter.style.zIndex = '1'
-			$main.classList.toggle('home__confrontation__item--clip')
-		}
-	}
-
-	const expandMobile = (descName: DescType) => {
-		const $alter = alterDescription.value
-		const $main = mainDescription.value
-		if (descName === 'alterDescription') {
-			$alter.classList.add('home__confrontation__description--show')
-		} else {
-			$main.classList.add('home__confrontation__description--show')
-		}
-	}
-
-	const decreaseMobile = (descName: DescType) => {
-		if (windowWidth.value < BREAKPOINT) {
-			const $alter = alterDescription.value
-			const $main = mainDescription.value
-			if (descName === 'alterDescription') {
-				$alter.classList.remove('home__confrontation__description--show')
-			} else {
-				$main.classList.remove('home__confrontation__description--show')
+	const leftOverlayStyle = computed(() => {
+		if (active.value === 'saber') {
+			return {
+				clipPath: 'circle(150% at 100% 50%)',
+				backgroundColor: saberFillColor,
+				color: alterFillColor,
+				transition: 'clip-path 0.5s ease-in-out',
 			}
 		}
+		return {
+			clipPath: 'circle(0% at 100% 50%)',
+			backgroundColor: saberFillColor,
+			color: alterFillColor,
+			transition: 'clip-path 0.5s ease-in-out',
+		}
+	})
+
+	const rightOverlayStyle = computed(() => {
+		if (active.value === 'alter') {
+			return {
+				clipPath: 'circle(150% at 0% 50%)',
+				backgroundColor: alterFillColor,
+				color: saberFillColor,
+				transition: 'clip-path 0.5s ease-in-out',
+			}
+		}
+		return {
+			clipPath: 'circle(0% at 0% 50%)',
+			backgroundColor: alterFillColor,
+			color: saberFillColor,
+			transition: 'clip-path 0.5s ease-in-out',
+		}
+	})
+
+	function toggle(hero: 'alter' | 'saber') {
+		active.value = active.value === hero ? null : hero
 	}
 </script>
 
 <template>
-	<section class="section home__confrontation">
-		<UContainer>
-			<div class="section__describe">
-				<h2 class="section__describe__headline">Confrontation</h2>
-				<p class="section__describe__subhead">click on the image to get a description</p>
-				<small class="section__describe__additional">
-					to close description click on the
-					{{ windowWidth > BREAKPOINT ? 'image again' : 'text' }}
-				</small>
-			</div>
-			<div class="home__confrontation__block">
-				<div ref="alter" class="home__confrontation__item home__confrontation__item--left">
-					<div class="home__confrontation__image">
-						<div
-							class="home__confrontation__portrait"
-							:style="{ backgroundImage: `url(${alterSaberImg})` }"
-							@click="clickExpand({ refName: 'alter', descName: 'alterDescription' })"
-						></div>
-					</div>
-					<div
-						ref="alterDescription"
-						class="home__confrontation__description home__confrontation__description--dark text-white"
-						@click="decreaseMobile('alterDescription')"
-					>
-						<h3 class="home__confrontation__title">Alter Saber</h3>
-						<p class="home__confrontation__subtitle">
-							If you do evil out of a hatred for evil, that rage and hate will merely birth new
-							conflict
-						</p>
-					</div>
-				</div>
-				<div ref="main" class="home__confrontation__item home__confrontation__item--right">
-					<div class="home__confrontation__image">
-						<div
-							class="home__confrontation__portrait"
-							:style="{ backgroundImage: `url(${saberImg})` }"
-							@click="clickExpand({ refName: 'main', descName: 'mainDescription' })"
-						></div>
-					</div>
-					<div
-						ref="mainDescription"
-						class="home__confrontation__description home__confrontation__description--light"
-						@click="decreaseMobile('mainDescription')"
-					>
-						<h3 class="home__confrontation__title">Saber</h3>
-						<p class="text-dark-700 home__confrontation__subtitle">
-							Of what worth is a king who fails to protect the powerless
-						</p>
-					</div>
+	<section class="flex h-screen w-full">
+		<div class="relative w-1/2 cursor-pointer" @click="toggle('alter')">
+			<img :src="alterSaberSrc" alt="AlterSaber" class="h-full w-full object-cover object-top" />
+
+			<div class="absolute inset-0 flex items-center justify-center p-4" :style="leftOverlayStyle">
+				<div v-if="active === 'saber'" class="text-center text-lg italic">
+					{{ saberQuote }}
 				</div>
 			</div>
-		</UContainer>
+		</div>
+
+		<div class="relative w-1/2 cursor-pointer" @click="toggle('saber')">
+			<img :src="saberSrc" alt="Saber" class="h-full w-full object-cover object-top" />
+
+			<div class="absolute inset-0 flex items-center justify-center p-4" :style="rightOverlayStyle">
+				<div v-if="active === 'alter'" class="text-center text-lg italic">
+					{{ alterQuote }}
+				</div>
+			</div>
+		</div>
 	</section>
 </template>
-
-<style lang="postcss" scoped>
-	@reference "@/assets/css/main.css";
-
-	$color--alter: #121212;
-	$color--main: #e5ecf6;
-
-	.home__confrontation {
-		&__block {
-			position: relative;
-			display: flex;
-			flex-direction: column;
-			min-height: 80vh;
-			box-shadow:
-				0 9px 11px -5px rgba(0, 0, 0, 0.2),
-				0 18px 28px 2px rgba(0, 0, 0, 0.14),
-				0 7px 34px 6px rgba(0, 0, 0, 0.12);
-			@variant -sm {
-				box-shadow: none;
-			}
-		}
-		&__item {
-			position: absolute;
-			top: 0;
-			left: 0;
-			z-index: 1;
-			display: flex;
-			width: 100%;
-			height: 100%;
-			border-radius: 5px;
-			overflow: hidden;
-			transition: clip-path 0.5s ease-in-out;
-			@variant -sm {
-				position: relative;
-				flex-direction: column;
-				height: 350px;
-				margin-bottom: 30px;
-			}
-			&--left {
-				background-color: $color--alter;
-				clip-path: polygon(0 0, 50% 0, 50% 100%, 0% 100%);
-				@variant -sm {
-					clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
-				}
-			}
-			&--right {
-				@apply flex-row-reverse text-black;
-				background-color: $color--main;
-				clip-path: polygon(100% 0, 50% 0, 50% 100%, 100% 100%);
-				@variant -sm {
-					flex-direction: inherit;
-					clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);
-				}
-			}
-			&--clip {
-				.home__confrontation__portrait {
-					transform: scale(1.1);
-				}
-			}
-			&--clip-right {
-				clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
-			}
-			&--clip-left {
-				clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%);
-			}
-		}
-		&__image {
-			width: 50%;
-			height: 100%;
-			overflow: hidden;
-			@variant -sm {
-				width: 100%;
-			}
-		}
-		&__portrait {
-			width: 100%;
-			height: 100%;
-			background-size: cover;
-			cursor: pointer;
-			transition: transform 0.3s ease-in-out;
-			&:hover {
-				transform: scale(1.1);
-				@variant -sm {
-					transform: scale(1);
-				}
-			}
-		}
-		&__description {
-			width: 50%;
-			padding: 30px;
-			@variant -sm {
-				position: absolute;
-				top: 100%;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				opacity: 0;
-				transition: all 0.6s ease-in;
-			}
-			&--show {
-				top: 0;
-				opacity: 1;
-			}
-			&--dark {
-				background-color: rgba($color--alter, 0.8);
-			}
-			&--light {
-				background-color: rgba($color--main, 0.8);
-			}
-		}
-		&__title {
-			margin-bottom: 15px;
-			font-size: 24px;
-			@variant -sm {
-				font-size: 20px;
-			}
-		}
-		&__subtitle {
-			font-size: 18px;
-			@variant -sm {
-				font-size: 16px;
-			}
-		}
-	}
-</style>
