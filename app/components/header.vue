@@ -2,14 +2,60 @@
 	const links = useLinks()
 	const { changeLocale, toggleDrawer, toggleDark } = useAction()
 	const route = useRoute()
+	const headerRef = useTemplateRef('header')
+
+	const { height } = useWindowSize()
+	const { y: currentScrollY } = useWindowScroll()
+
+	const lastScroll = ref(0)
 
 	const isHome = computed(() => route.name === 'index')
+	const scrollBreakPoint = computed(() => height.value / 2)
+
+	const collapsibleHeader = () => {
+		if (!isHome.value) {
+			return
+		}
+		const nav = headerRef.value
+		const scrollDownClass = 'scroll-down'
+		const breakPoint = scrollBreakPoint.value
+		const innerLastScroll = lastScroll.value
+
+		if (currentScrollY.value > breakPoint - 100) {
+			if (currentScrollY.value > innerLastScroll && !nav?.classList.contains(scrollDownClass)) {
+				// down
+				nav?.classList.add(scrollDownClass)
+			} else if (
+				currentScrollY.value < innerLastScroll &&
+				nav?.classList.contains(scrollDownClass)
+			) {
+				// up
+				nav?.classList.remove(scrollDownClass)
+			}
+
+			lastScroll.value = currentScrollY.value
+		} else {
+			nav?.classList.remove(scrollDownClass)
+		}
+	}
+
+	onMounted(() => {
+		window.addEventListener('scroll', collapsibleHeader)
+	})
+
+	onBeforeUnmount(() => {
+		window.removeEventListener('scroll', collapsibleHeader)
+	})
 </script>
 
 <template>
 	<header
-		class="fixed top-0 left-0 z-[100] flex min-h-[52px] w-[100%] items-center"
-		:class="[{ header: !isHome }]"
+		ref="header"
+		class="header fixed top-0 left-0 z-[100] flex min-h-[52px] w-[100%] items-center"
+		:class="{
+			'transition-all duration-200': isHome,
+			'bg-transparent! text-white!': isHome && currentScrollY < scrollBreakPoint,
+		}"
 	>
 		<UContainer>
 			<div class="flex items-center justify-between gap-4">
@@ -94,5 +140,9 @@
 
 	.exact-link {
 		@apply after:w-full;
+	}
+
+	.scroll-down {
+		@apply top-[-100px];
 	}
 </style>
