@@ -1,13 +1,11 @@
-<template>
-	slider
-</template>
-
-<!-- <script lang="ts" setup>
-	import { useWindowSize, useParallax } from '@vueuse/core'
-	import Parallax from 'parallax-js'
+<script lang="ts" setup>
+	import type Parallax from 'parallax-js'
 	import { CHARACTERS } from '~/constants'
 
+	const BREAKPOINT = 1023
+
 	const { width } = useWindowSize()
+	const { $parallax } = useNuxtApp()
 
 	const lightbox = reactive({
 		visible: false,
@@ -18,18 +16,9 @@
 	const parallax = ref<Parallax[]>([])
 	const scene = ref<HTMLElement[]>([])
 
-	const onResize = () => {
-		if (width.value > 1200) {
-			enableParallax()
-		} else {
-			disableParallax()
-		}
-	}
-
 	const onCharacterSelect = (index: number) => {
 		lightbox.index = index
 		lightbox.visible = true
-		disableParallax()
 	}
 
 	const enableParallax = () => {
@@ -44,55 +33,43 @@
 		})
 	}
 
-	const onLightboxClose = () => {
-		enableParallax()
-	}
+	const onResize = useDebounceFn(() => {
+		if (width.value > BREAKPOINT) {
+			enableParallax()
+		} else {
+			disableParallax()
+		}
+	}, 300)
 
 	onMounted(() => {
 		scene.value.forEach((element) => {
-			const parallaxInstance = new Parallax(element)
-			if (width.value < 1200) {
+			const parallaxInstance = new $parallax(element)
+			if (width.value < BREAKPOINT) {
 				parallaxInstance.disable()
 			}
 			parallax.value.push(parallaxInstance)
 		})
 	})
 
-	watch(
-		() => lightbox.visible,
-		(val) => {
-			if (!val) {
-				onLightboxClose()
-			}
-		},
-		{
-			deep: true,
-		}
-	)
+	watch(() => width.value, onResize)
 </script>
 
 <template>
-	<section v-resize="onResize" class="section home__slider">
-		<v-container>
-			<div class="section__describe">
-				<h2 class="section__describe__headline">Destiny</h2>
-				<p class="section__describe__subhead">
-					hover the cursor over the slide and move it to different points of the element
-				</p>
-				<small class="section__describe__additional">
-					click on the element to get more information
-				</small>
-			</div>
-			<div class="home__slider__block">
+	<section>
+		<UContainer>
+			<div class="flex h-screen flex-col lg:h-auto lg:flex-row">
 				<div
 					v-for="(character, index) in CHARACTERS"
 					:key="character.name"
-					class="home__slider__item"
+					:class="[
+						'group flex h-[650px] basis-[calc(100%/6)] cursor-pointer items-center justify-center overflow-hidden transition-[flex-basis] duration-1000 ease-in-out hover:basis-full',
+						index !== CHARACTERS.length - 1 ? 'border-white lg:border-r-[3px]' : '',
+					]"
 					@click="onCharacterSelect(index)"
 				>
-					<div ref="scene" class="home__slider__inner" data-hover-only="true">
+					<div ref="scene" class="relative h-full w-full" data-hover-only="true">
 						<div
-							class="home__slider__backdrop"
+							class="absolute inset-0 h-full w-full scale-110 transform bg-cover bg-center bg-no-repeat transition-[filter] duration-500 ease-linear group-hover:blur-[2px]"
 							:style="{
 								backgroundImage: `url(${character.sliderImage})`,
 								backgroundPositionX: character.backdropPosition.bgX,
@@ -101,7 +78,7 @@
 							data-depth="0.21"
 						></div>
 						<div
-							class="home__slider__doll"
+							class="absolute inset-0 h-full w-full scale-[0.9] transform bg-contain bg-center bg-no-repeat opacity-0 transition-opacity duration-700 ease-linear group-hover:opacity-100"
 							:style="{ backgroundImage: `url(${character.dollImage})` }"
 							data-calibrate-x="data-calibrate-x"
 							data-depth="1"
@@ -109,86 +86,13 @@
 					</div>
 				</div>
 			</div>
-		</v-container>
+		</UContainer>
+
+		<VueEasyLightbox
+			:visible="lightbox.visible"
+			:imgs="lightbox.imgs"
+			:index="lightbox.index"
+			@hide="lightbox.visible = false"
+		/>
 	</section>
-
-	<vue-easy-lightbox
-		:visible="lightbox.visible"
-		:imgs="lightbox.imgs"
-		:index="lightbox.index"
-		@hide="lightbox.visible = false"
-	></vue-easy-lightbox>
 </template>
-
-<style lang="postcss" scoped>
-	@reference "@/assets/css/main.css";
-
-	.home__slider {
-		&__block {
-			display: flex;
-			@variant -md {
-				flex-direction: column;
-				height: 150vh;
-			}
-			@variant -sm {
-				height: 100vh;
-			}
-		}
-		&__item {
-			flex-basis: calc(100% / 6);
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 600px;
-			transition: flex-basis 1s ease-in-out;
-			overflow: hidden;
-			cursor: pointer;
-			&:not(:last-child) {
-				border-right: 3px solid #fff;
-				@variant -lg {
-					border-right: none;
-					border-bottom: 3px solid #fff;
-				}
-			}
-			&:hover {
-				flex-basis: 100%;
-				.home__slider__backdrop {
-					filter: blur(2px);
-				}
-				.home__slider__doll {
-					opacity: 1;
-				}
-			}
-		}
-		&__inner {
-			position: relative;
-			width: 100%;
-			height: 100%;
-		}
-		&__backdrop,
-		&__doll {
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			width: 100%;
-			height: 100%;
-			margin: auto;
-			background-repeat: no-repeat;
-			background-position: center;
-		}
-		&__backdrop {
-			@apply bg-black;
-			scale: 1.1;
-			background-size: cover;
-			transition: filter 0.5s linear;
-		}
-		&__doll {
-			scale: 0.9;
-			background-size: contain;
-			opacity: 0;
-			transition: opacity 0.7s linear;
-		}
-	}
-</style> -->

@@ -83,7 +83,7 @@ export const CHARACTERS: Character[] = [
 		image: tomoe,
 		backdropPosition: {
 			bgX: '70%',
-			bgY: '20px',
+			bgY: '0',
 		},
 		sliderImage: tomoeSlider,
 		dollImage: tomoeDoll,
