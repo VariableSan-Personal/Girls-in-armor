@@ -35,7 +35,6 @@ export default defineNuxtConfig({
 		'@nuxt/ui',
 		'@nuxt/eslint',
 		'@nuxt/icon',
-		'@nuxt/image',
 		'@nuxt/scripts',
 		'@nuxtjs/i18n',
 		'@pinia/nuxt',

@@ -29,3 +29,4 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3002
+      - NODE_OPTIONS=--max-old-space-size=2048
