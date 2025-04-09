@@ -1,10 +1,16 @@
 <script setup lang="ts">
 	const links = useLinks()
 	const { changeLocale, toggleDrawer, toggleDark } = useAction()
+	const route = useRoute()
+
+	const isHome = computed(() => route.name === 'index')
 </script>
 
 <template>
-	<header class="fixed top-0 left-0 z-[100] flex min-h-[52px] w-[100%] items-center">
+	<header
+		class="fixed top-0 left-0 z-[100] flex min-h-[52px] w-[100%] items-center"
+		:class="[{ header: !isHome }]"
+	>
 		<UContainer>
 			<div class="flex items-center justify-between gap-4">
 				<div class="flex items-center gap-x-4">
@@ -54,8 +60,20 @@
 					</nav>
 
 					<div class="flex gap-2">
-						<UButton variant="ghost" size="sm" icon="mdi-translate" @click="changeLocale" />
-						<UButton variant="ghost" icon="mdi-theme-light-dark" size="sm" @click="toggleDark" />
+						<UButton
+							variant="ghost"
+							class="text-inherit"
+							size="sm"
+							icon="mdi-translate"
+							@click="changeLocale"
+						/>
+						<UButton
+							variant="ghost"
+							class="text-inherit"
+							icon="mdi-theme-light-dark"
+							size="sm"
+							@click="toggleDark"
+						/>
 					</div>
 				</div>
 			</div>
@@ -65,6 +83,10 @@
 
 <style scoped>
 	@reference "@/assets/css/main.css";
+
+	.header {
+		background-color: var(--ui-bg);
+	}
 
 	.link {
 		@apply relative flex cursor-pointer items-center gap-2 py-2 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full;
