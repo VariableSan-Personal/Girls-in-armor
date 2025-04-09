@@ -5,5 +5,10 @@
 	"waifu-create": "Create waifu",
 	"login": "Login",
 	"register": "Register",
-	"logout": "Logout"
+	"logout": "Logout",
+	"errors": {
+		"not-exist": "",
+		"something-went-wrong": "",
+		"return-home": ""
+	}
 }

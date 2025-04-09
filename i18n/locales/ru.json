@@ -1,1 +1,14 @@
-{}
+{
+  "errors": {
+    "not-exist": "",
+    "something-went-wrong": "",
+    "return-home": ""
+  },
+  "home": "Главная",
+  "login": "Авторизоваться",
+  "logout": "Выход",
+  "moderate": "Модерация",
+  "register": "Регистрация",
+  "waifu-create": "Создать вайфу",
+  "waifu-list": "Список вайфу"
+}
