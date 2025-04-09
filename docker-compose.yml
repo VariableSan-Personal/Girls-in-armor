@@ -1,0 +1,33 @@
+version: '3.8'
+
+networks:
+  web-network:
+    driver: bridge
+
+services:
+  frontend:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          memory: 512M
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+        max-file: '3'
+    ports:
+      - '3002:3002'
+    networks:
+      - web-network
+    environment:
+      - NODE_ENV=production
+      - PORT=3002
