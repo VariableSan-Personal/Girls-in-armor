@@ -19,8 +19,6 @@ services:
       resources:
         limits:
           memory: 512M
-    env_file:
-      - .env
     logging:
       driver: 'json-file'
       options:
