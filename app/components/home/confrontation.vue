@@ -52,25 +52,91 @@
 </script>
 
 <template>
-	<section class="flex h-screen w-full">
-		<div class="relative w-1/2 cursor-pointer" @click="toggle('alter')">
-			<img :src="alterSaberSrc" alt="AlterSaber" class="h-full w-full object-cover object-top" />
+	<section>
+		<div class="hidden h-screen w-full sm:flex">
+			<div class="relative w-1/2 cursor-pointer" @click="toggle('alter')">
+				<img :src="alterSaberSrc" alt="AlterSaber" class="h-full w-full object-cover object-top" />
 
-			<div class="absolute inset-0 flex items-center justify-center p-4" :style="leftOverlayStyle">
-				<div v-if="active === 'saber'" class="text-center text-lg italic">
-					{{ saberQuote }}
+				<div
+					class="absolute inset-0 flex items-center justify-center p-4"
+					:style="leftOverlayStyle"
+				>
+					<div v-if="active === 'saber'" class="text-center text-lg italic">
+						{{ saberQuote }}
+					</div>
+				</div>
+			</div>
+
+			<div class="relative w-1/2 cursor-pointer" @click="toggle('saber')">
+				<img :src="saberSrc" alt="Saber" class="h-full w-full object-cover object-top" />
+
+				<div
+					class="absolute inset-0 flex items-center justify-center p-4"
+					:style="rightOverlayStyle"
+				>
+					<div v-if="active === 'alter'" class="text-center text-lg italic">
+						{{ alterQuote }}
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="relative w-1/2 cursor-pointer" @click="toggle('saber')">
-			<img :src="saberSrc" alt="Saber" class="h-full w-full object-cover object-top" />
+		<div class="sm:hidden">
+			<div class="flex flex-col">
+				<div class="relative cursor-pointer overflow-hidden" @click="toggle('alter')">
+					<img :src="alterSaberSrc" alt="AlterSaber" class="h-96 w-full object-cover object-top" />
+					<transition name="slide-down">
+						<div
+							v-if="active === 'alter'"
+							class="absolute inset-0 flex items-center justify-center bg-black/70 p-4"
+						>
+							<p class="text-center text-lg text-white italic">
+								{{ saberQuote }}
+							</p>
+						</div>
+					</transition>
+				</div>
 
-			<div class="absolute inset-0 flex items-center justify-center p-4" :style="rightOverlayStyle">
-				<div v-if="active === 'alter'" class="text-center text-lg italic">
-					{{ alterQuote }}
+				<div class="relative cursor-pointer overflow-hidden" @click="toggle('saber')">
+					<img :src="saberSrc" alt="Saber" class="h-96 w-full object-cover object-top" />
+					<transition name="slide-down">
+						<div
+							v-if="active === 'saber'"
+							class="absolute inset-0 flex items-center justify-center bg-black/70 p-4"
+						>
+							<p class="text-center text-lg text-white italic">
+								{{ alterQuote }}
+							</p>
+						</div>
+					</transition>
 				</div>
 			</div>
 		</div>
 	</section>
 </template>
+
+<style scoped>
+	.slide-down-enter-active,
+	.slide-down-leave-active {
+		transition:
+			top 0.5s ease,
+			opacity 0.5s ease;
+	}
+	.slide-down-enter-from {
+		top: -100%;
+		opacity: 0;
+	}
+	.slide-down-leave-to {
+		top: 100%;
+		opacity: 0;
+	}
+
+	.fade-enter-active,
+	.fade-leave-active {
+		transition: opacity 0.5s ease;
+	}
+	.fade-enter-from,
+	.fade-leave-to {
+		opacity: 0;
+	}
+</style>
