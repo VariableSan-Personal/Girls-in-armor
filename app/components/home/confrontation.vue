@@ -53,65 +53,75 @@
 
 <template>
 	<section>
-		<div class="hidden h-screen w-full sm:flex">
-			<div class="relative w-1/2 cursor-pointer" @click="toggle('alter')">
-				<img :src="alterSaberSrc" alt="AlterSaber" class="h-full w-full object-cover object-top" />
+		<UContainer>
+			<div class="hidden h-[80vh] w-full overflow-hidden rounded-md sm:flex">
+				<div class="relative w-1/2 cursor-pointer" @click="toggle('alter')">
+					<img
+						:src="alterSaberSrc"
+						alt="AlterSaber"
+						class="h-full w-full object-cover object-top"
+					/>
 
-				<div
-					class="absolute inset-0 flex items-center justify-center p-4"
-					:style="leftOverlayStyle"
-				>
-					<div v-if="active === 'saber'" class="text-center text-lg italic">
-						{{ saberQuote }}
+					<div
+						class="absolute inset-0 flex items-center justify-center p-4"
+						:style="leftOverlayStyle"
+					>
+						<div v-if="active === 'saber'" class="text-center text-lg italic">
+							{{ saberQuote }}
+						</div>
+					</div>
+				</div>
+
+				<div class="relative w-1/2 cursor-pointer" @click="toggle('saber')">
+					<img :src="saberSrc" alt="Saber" class="h-full w-full object-cover object-top" />
+
+					<div
+						class="absolute inset-0 flex items-center justify-center p-4"
+						:style="rightOverlayStyle"
+					>
+						<div v-if="active === 'alter'" class="text-center text-lg italic">
+							{{ alterQuote }}
+						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="relative w-1/2 cursor-pointer" @click="toggle('saber')">
-				<img :src="saberSrc" alt="Saber" class="h-full w-full object-cover object-top" />
+			<div class="overflow-hidden rounded-md sm:hidden">
+				<div class="flex flex-col rounded-md">
+					<div class="relative cursor-pointer overflow-hidden" @click="toggle('alter')">
+						<img
+							:src="alterSaberSrc"
+							alt="AlterSaber"
+							class="h-96 w-full object-cover object-top"
+						/>
+						<transition name="slide-down">
+							<div
+								v-if="active === 'alter'"
+								class="absolute inset-0 flex items-center justify-center bg-black/70 p-4"
+							>
+								<p class="text-center text-lg text-white italic">
+									{{ saberQuote }}
+								</p>
+							</div>
+						</transition>
+					</div>
 
-				<div
-					class="absolute inset-0 flex items-center justify-center p-4"
-					:style="rightOverlayStyle"
-				>
-					<div v-if="active === 'alter'" class="text-center text-lg italic">
-						{{ alterQuote }}
+					<div class="relative cursor-pointer overflow-hidden" @click="toggle('saber')">
+						<img :src="saberSrc" alt="Saber" class="h-96 w-full object-cover object-top" />
+						<transition name="slide-down">
+							<div
+								v-if="active === 'saber'"
+								class="absolute inset-0 flex items-center justify-center bg-black/70 p-4"
+							>
+								<p class="text-center text-lg text-white italic">
+									{{ alterQuote }}
+								</p>
+							</div>
+						</transition>
 					</div>
 				</div>
 			</div>
-		</div>
-
-		<div class="sm:hidden">
-			<div class="flex flex-col">
-				<div class="relative cursor-pointer overflow-hidden" @click="toggle('alter')">
-					<img :src="alterSaberSrc" alt="AlterSaber" class="h-96 w-full object-cover object-top" />
-					<transition name="slide-down">
-						<div
-							v-if="active === 'alter'"
-							class="absolute inset-0 flex items-center justify-center bg-black/70 p-4"
-						>
-							<p class="text-center text-lg text-white italic">
-								{{ saberQuote }}
-							</p>
-						</div>
-					</transition>
-				</div>
-
-				<div class="relative cursor-pointer overflow-hidden" @click="toggle('saber')">
-					<img :src="saberSrc" alt="Saber" class="h-96 w-full object-cover object-top" />
-					<transition name="slide-down">
-						<div
-							v-if="active === 'saber'"
-							class="absolute inset-0 flex items-center justify-center bg-black/70 p-4"
-						>
-							<p class="text-center text-lg text-white italic">
-								{{ alterQuote }}
-							</p>
-						</div>
-					</transition>
-				</div>
-			</div>
-		</div>
+		</UContainer>
 	</section>
 </template>
 

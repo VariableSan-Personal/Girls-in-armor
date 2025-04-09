@@ -36,7 +36,20 @@
 	}
 
 	.headline {
-		@apply text-3xl font-bold;
+		@apply relative text-3xl font-bold;
+	}
+
+	.headline:before,
+	.headline:after {
+		@apply absolute top-1/2 h-0.5 w-8 bg-neutral-200 content-[""];
+	}
+
+	.headline:before {
+		@apply left-8;
+	}
+
+	.headline:after {
+		@apply right-8;
 	}
 
 	.subtitle {
