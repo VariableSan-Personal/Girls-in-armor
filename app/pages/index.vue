@@ -28,7 +28,7 @@
 	</div>
 </template>
 
-<style scoped>
+<style>
 	@reference "@/assets/css/main.css";
 
 	.text-block {

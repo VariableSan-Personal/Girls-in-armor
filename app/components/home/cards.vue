@@ -61,7 +61,7 @@
 	</section>
 </template>
 
-<style scoped>
+<style>
 	.quote {
 		background-color: var(--ui-bg);
 	}

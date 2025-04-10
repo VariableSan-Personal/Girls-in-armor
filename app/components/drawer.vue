@@ -50,7 +50,7 @@
 	</transition>
 </template>
 
-<style scoped>
+<style>
 	.bg-drawer {
 		background-color: var(--ui-neutral);
 	}

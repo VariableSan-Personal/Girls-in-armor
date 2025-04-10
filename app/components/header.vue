@@ -121,7 +121,7 @@
 	</header>
 </template>
 
-<style scoped>
+<style>
 	@reference "@/assets/css/main.css";
 
 	.header {

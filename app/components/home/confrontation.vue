@@ -125,7 +125,7 @@
 	</section>
 </template>
 
-<style scoped>
+<style>
 	.slide-down-enter-active,
 	.slide-down-leave-active {
 		transition:
