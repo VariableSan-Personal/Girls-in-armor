@@ -7,11 +7,12 @@
 	})
 
 	const toast = useToast()
+	const { t } = useI18n()
 
 	type Schema = z.infer<typeof schema>
 	const schema = z.object({
-		username: z.string().min(1),
-		password: z.string().min(6),
+		username: z.string().min(1, t('errors.username-required')),
+		password: z.string().min(6, t('errors.password-min-length')),
 	})
 
 	const form = reactive<Schema>({
@@ -28,13 +29,10 @@
 		} catch (error) {
 			if (error instanceof z.ZodError) {
 				error.errors.forEach((error) => {
-					const path = error.path.join('.')
-					errors.value[path] = error.message
-				})
-			} else {
-				toast.add({
-					color: 'error',
-					description: String(error),
+					toast.add({
+						color: 'error',
+						description: error.message,
+					})
 				})
 			}
 		}
@@ -48,7 +46,7 @@
 <template>
 	<section class="relative h-screen w-full overflow-hidden">
 		<div
-			class="absolute inset-0 h-full w-full bg-cover bg-[70%] sm:bg-center bg-no-repeat"
+			class="absolute inset-0 h-full w-full bg-cover bg-[70%] bg-no-repeat sm:bg-center"
 			:style="{ backgroundImage: `url(${LoginBg})` }"
 		>
 			<div class="absolute inset-0 bg-black/20"></div>
@@ -58,11 +56,11 @@
 			<UCard
 				class="bg-main/30 w-full max-w-md space-y-6 overflow-hidden shadow-xl backdrop-blur-sm"
 			>
-				<div class="text-center">
-					<h1 class="mb-1 text-2xl font-bold">
+				<div class="mb-4 space-y-1 text-center">
+					<h1 class="text-2xl font-bold">
 						{{ $t('welcome_back') }}
 					</h1>
-					<p class="text-neutral-400">{{ $t('login_to_your_account') }}</p>
+					<p>{{ $t('login_to_your_account') }}</p>
 				</div>
 
 				<UForm :schema="schema" :state="form" class="space-y-6" @submit="handleSubmit">
@@ -88,7 +86,7 @@
 					</UFormField>
 
 					<div class="flex items-center justify-between">
-						<UCheckbox label="Remember me" name="remember" />
+						<UCheckbox :label="$t('remember_me')" name="remember" />
 						<UButton variant="link" class="p-0">{{ $t('forgot_password') }}</UButton>
 					</div>
 
@@ -97,8 +95,8 @@
 					</UButton>
 
 					<div class="space-x-2 text-center text-sm">
-						<span class="text-neutral-400">{{ $t('dont_have_account') }}</span>
-						<NuxtLink to="/register" class="text-primary-600 hover:text-primary-500 font-medium">
+						<span>{{ $t('dont_have_account') }}</span>
+						<NuxtLink :to="{ name: 'register' }" class="text-primary font-medium">
 							{{ $t('sign_up') }}
 						</NuxtLink>
 					</div>

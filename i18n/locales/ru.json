@@ -1,14 +1,36 @@
 {
-  "errors": {
-    "not-exist": "",
-    "something-went-wrong": "",
-    "return-home": ""
-  },
-  "home": "Главная",
-  "login": "Авторизоваться",
-  "logout": "Выход",
-  "moderation": "Модерация",
-  "register": "Регистрация",
-  "waifu-create": "Создать вайфу",
-  "waifu-list": "Список вайфу"
+	"home": "Главная",
+	"waifu-list": "Список вайфу",
+	"moderation": "Модерация",
+	"waifu-create": "Создать вайфу",
+	"login": "Вход",
+	"register": "Регистрация",
+	"logout": "Выход",
+	"errors": {
+		"not-exist": "Ресурс не существует",
+		"something-went-wrong": "Что-то пошло не так",
+		"return-home": "Вернуться на главную",
+		"username-required": "Имя пользователя обязательно",
+		"valid-email-required": "Пожалуйста, введите действительный адрес электронной почты",
+		"password-min-length": "Пароль должен содержать не менее 6 символов",
+		"confirm-password-required": "Подтверждение пароля обязательно"
+	},
+	"create_account": "Создать аккаунт",
+	"sign_up_to_get_started": "Зарегистрируйтесь, чтобы начать",
+	"username": "Имя пользователя",
+	"enter_your_username": "Введите имя пользователя",
+	"email": "Электронная почта",
+	"enter_your_email": "Введите электронную почту",
+	"password": "Пароль",
+	"enter_your_password": "Введите пароль",
+	"confirm_password": "Подтвердите пароль",
+	"confirm_your_password": "Подтвердите ваш пароль",
+	"sign_up": "Зарегистрироваться",
+	"already_have_account": "Уже есть аккаунт?",
+	"sign_in": "Войти",
+	"welcome_back": "С возвращением",
+	"login_to_your_account": "Войдите в свой аккаунт",
+	"forgot_password": "Забыли пароль?",
+	"dont_have_account": "Нет аккаунта?",
+	"remember_me": "Запомнить меня"
 }
