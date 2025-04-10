@@ -49,7 +49,7 @@ jobs:
       # 7. Копируем архив с образом на ваш VPS
       - name: Copy Docker Image Archive to VPS
         run: |
-          scp -i ~/.ssh/id_rsa girls-in-armor.tar.gz ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_PATH }}
+          scp girls-in-armor.tar.gz ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_PATH }}
 
       # 8. На удалённом сервере загружаем образ и перезапускаем контейнер(ы) через Docker Compose
       - name: Load Docker Image and Restart Containers on VPS
