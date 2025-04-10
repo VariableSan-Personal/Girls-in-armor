@@ -1,0 +1,10 @@
+Dockerfile
+.dockerignore
+**/node_modules/
+**/pnpm-lock.yaml
+npm-debug.log
+.next
+.git
+.github
+*.md
+.env.example
