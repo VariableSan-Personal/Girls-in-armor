@@ -1,42 +1,64 @@
-name: Deploy Application
+name: Build and Deploy Nuxt Application
 
 on:
   push:
     branches: [master]
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Cloning a repository
+      # 1. Получаем репозиторий
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Set up SSH
+      # 2. Устанавливаем Node.js (если требуется для сборки проекта)
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'  # Используйте ту же версию, что и в Dockerfile
+
+      # 3. Устанавливаем зависимости и собираем проект (этап Nuxt сборки)
+      - name: Install dependencies and Build Project
+        run: |
+          npm ci
+          npm run build
+
+      # 4. Собираем Docker-образ с использованием целевого stage prod
+      - name: Build Docker Image (Production)
+        run: |
+          docker build --target prod -t girls-in-armor .
+
+      # 5. Сохраняем образ в архив, который потом можно передать на VPS
+      - name: Save Docker Image to Archive
+        run: |
+          docker save girls-in-armor | gzip > girls-in-armor.tar.gz
+
+      # 6. Настраиваем SSH для дальнейших действий на вашем VPS
+      - name: Set up SSH Agent
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.SERVER_KEY }}
 
-      - name: Add host key
+      - name: Add Server to Known Hosts
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Copying files to the server
+      # 7. Копируем архив с образом на ваш VPS
+      - name: Copy Docker Image Archive to VPS
         run: |
-          rsync -avz --delete -e "ssh -i ~/.ssh/id_rsa" . ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_PATH }}
+          scp -i ~/.ssh/id_rsa girls-in-armor.tar.gz ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_PATH }}
 
-      - name: Build and restart containers
+      # 8. На удалённом сервере загружаем образ и перезапускаем контейнер(ы) через Docker Compose
+      - name: Load Docker Image and Restart Containers on VPS
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
             cd ${{ secrets.SERVER_PATH }}
-            docker compose down
-            docker compose up --build -d
+            docker load < girls-in-armor.tar.gz
+            docker-compose down
+            docker-compose up -d
+            docker container prune -f
+            docker image prune -f --filter "dangling=true"
           EOF
-
-      - name: Cleanup
-        run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "
-            docker container prune -f &&
-            docker image prune -f --filter 'dangling=true'
-          "

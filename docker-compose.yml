@@ -5,10 +5,7 @@ networks:
 services:
   frontend:
     restart: always
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: prod
+    image: girls-in-armor
     deploy:
       restart_policy:
         condition: on-failure
