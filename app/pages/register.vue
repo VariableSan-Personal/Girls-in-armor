@@ -69,7 +69,7 @@
 					<h1 class="text-2xl font-bold">
 						{{ $t('create_account') }}
 					</h1>
-					<p class="text-neutral-400">{{ $t('sign_up_to_get_started') }}</p>
+					<p>{{ $t('sign_up_to_get_started') }}</p>
 				</div>
 
 				<UForm :schema="schema" :state="form" class="space-y-6" @submit="handleSubmit">
@@ -121,7 +121,7 @@
 					</UButton>
 
 					<div class="space-x-2 text-center text-sm">
-						<span class="text-neutral-400">{{ $t('already_have_account') }}</span>
+						<span>{{ $t('already_have_account') }}</span>
 						<NuxtLink :to="{ name: 'login' }" class="text-primary font-medium">
 							{{ $t('sign_in') }}
 						</NuxtLink>

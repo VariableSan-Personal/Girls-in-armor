@@ -41,15 +41,15 @@
 
 	.headline:before,
 	.headline:after {
-		@apply absolute top-1/2 h-0.5 w-8 bg-neutral-200 content-[""];
+		@apply absolute top-1/2 h-0.5 w-4 bg-neutral-500 content-[""] sm:w-8;
 	}
 
 	.headline:before {
-		@apply left-8;
+		@apply left-0 sm:left-8;
 	}
 
 	.headline:after {
-		@apply right-8;
+		@apply right-0 sm:right-8;
 	}
 
 	.subtitle {

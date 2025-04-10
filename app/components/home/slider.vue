@@ -43,10 +43,7 @@
 
 	onMounted(() => {
 		scene.value.forEach((element) => {
-			const parallaxInstance = new $parallax(element)
-			if (width.value < BREAKPOINT) {
-				parallaxInstance.disable()
-			}
+			const parallaxInstance = new $parallax(element, { hoverOnly: true })
 			parallax.value.push(parallaxInstance)
 		})
 	})

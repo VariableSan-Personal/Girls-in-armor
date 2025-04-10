@@ -61,6 +61,17 @@ export default defineNuxtConfig({
 		strategy: 'no_prefix',
 	},
 
+	nitro: {
+		esbuild: {
+			options: {
+				target: 'esnext',
+			},
+		},
+		prerender: {
+			routes: ['/', '/login', '/register'],
+		},
+	},
+
 	ui: {
 		theme: {
 			colors: ['primary', 'secondary', 'info', 'success', 'warning', 'error', 'neutral'],
