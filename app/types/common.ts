@@ -1,46 +1,59 @@
 export interface Link {
-  title: string
-  route: string
-  icon: string
-  exact?: boolean
+	title: string
+	route: string
+	icon: string
+	exact?: boolean
 }
 
 export interface User {
-  _id: string
-  permission: boolean
-  login: string
-  email: string
+	_id: string
+	permission: boolean
+	login: string
+	email: string
 }
 
 export interface UserForm {
-  login: string
-  password: string
-  email?: string
+	login: string
+	password: string
+	email?: string
 }
 
 export interface SnackbarMessage {
-  text: string
-  color: "warning" | "success" | "info" | "error"
+	text: string
+	color: 'warning' | 'success' | 'info' | 'error'
 }
 
 export interface Waifu {
-  _id: string
-  imgUrl: string
-  name: string
-  description: string
-  user: string | User
-  date: string
+	_id: string
+	imgUrl: string
+	name: string
+	description: string
+	user: string | User
+	date: string
 }
 
 export interface ExtendedWaifu extends Waifu {
-  imageFile: File[]
+	imageFile: File[]
 }
 
 export interface Character {
-  name: string
-  quote: string
-  image: string
-  backdropPosition: { [key: string]: string }
-  sliderImage: string
-  dollImage: string
+	name: string
+	quote: string
+	image: string
+	backdropPosition: { [key: string]: string }
+	sliderImage: string
+	dollImage: string
 }
+
+export interface Notification {
+	show: boolean
+	message: string
+	color: 'success' | 'info' | 'warning' | 'error'
+	timeout: number
+}
+
+export type CustomPageMeta = Partial<{
+	showBack: boolean
+	hideBottomNav: boolean
+	title: string
+}>

@@ -17,8 +17,8 @@ export function useLinks() {
 			condition: true,
 		},
 		{
-			title: t('moderate'),
-			routeName: 'waifu-moderate',
+			title: t('moderation'),
+			routeName: 'waifu-moderation',
 			icon: 'mdi-microsoft-access',
 			condition: userStore.user?.permission,
 		},

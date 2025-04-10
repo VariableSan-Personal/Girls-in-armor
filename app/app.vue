@@ -14,7 +14,7 @@
 </script>
 
 <template>
-	<UApp>
+	<UApp :toaster="{ position: 'top-right' }">
 		<NuxtLayout>
 			<NuxtLoadingIndicator />
 			<NuxtPage />
