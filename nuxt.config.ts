@@ -69,6 +69,8 @@ export default defineNuxtConfig({
 		},
 		prerender: {
 			routes: ['/', '/login', '/register'],
+			concurrency: 1,
+			failOnError: false,
 		},
 	},
 
