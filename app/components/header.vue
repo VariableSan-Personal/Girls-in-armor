@@ -73,13 +73,7 @@
 						<Icon name="lucide:align-justify" />
 					</UButton>
 
-					<NuxtLink
-						class="flex items-center gap-2 transition hover:opacity-60"
-						:to="{ name: 'index' }"
-					>
-						<Icon class="text-3xl sm:text-4xl" name="custom:shield-and-sword" />
-						Girls in Armor
-					</NuxtLink>
+					<Logo />
 				</div>
 
 				<div class="flex items-center gap-4">
@@ -127,7 +121,7 @@
 	</header>
 </template>
 
-<style scoped>
+<style>
 	@reference "@/assets/css/main.css";
 
 	.header {

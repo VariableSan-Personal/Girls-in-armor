@@ -41,6 +41,7 @@ export default defineNuxtConfig({
 		'@pinia/nuxt',
 		'@vueuse/nuxt',
 		'nuxt-easy-lightbox',
+		'nuxt-zod-i18n',
 	],
 
 	css: ['~/assets/css/main.css'],
@@ -89,4 +90,6 @@ export default defineNuxtConfig({
 			}
 		},
 	},
+
+	zodI18n: {},
 })

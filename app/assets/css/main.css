@@ -16,6 +16,8 @@
 
 	--color-primary: var(--ui-primary);
 	--color-secondary: var(--ui-primary);
+
+	--color-main: var(--ui-bg);
 }
 
 .dark {
