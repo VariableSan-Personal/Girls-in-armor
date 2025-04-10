@@ -48,8 +48,8 @@ jobs:
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
             cd ${{ secrets.SERVER_PATH }}
             docker load < girls-in-armor.tar.gz
-            docker-compose down
-            docker-compose up -d
+            docker compose down
+            docker compose up -d
             docker container prune -f
             docker image prune -f --filter "dangling=true"
             rm girls-in-armor.tar.gz
