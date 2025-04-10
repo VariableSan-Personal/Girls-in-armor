@@ -41,7 +41,7 @@ jobs:
 
       - name: Copy Docker Image Archive to VPS
         run: |
-          scp girls-in-armor.tar.gz ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_PATH }}
+          rsync -avz -e "ssh" girls-in-armor.tar.gz ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_PATH }}
 
       - name: Load Docker Image and Restart Containers on VPS
         run: |
