@@ -26,6 +26,7 @@ export default defineNuxtConfig({
 	},
 
 	devtools: { enabled: false },
+	sourcemap: false,
 
 	alias: {
 		'@': fileURLToPath(new URL('./app', import.meta.url)),
