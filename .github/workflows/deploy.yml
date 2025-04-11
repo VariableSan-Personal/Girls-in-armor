@@ -39,16 +39,16 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Copy Docker Image Archive to VPS
+      - name: Copy Files to VPS
         run: |
-          rsync -avz -e "ssh" girls-in-armor.tar.gz ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_PATH }}
+          rsync -avz -e "ssh" girls-in-armor.tar.gz docker-compose.yml ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_PATH }}
 
-      - name: Load Docker Image and Restart Containers on VPS
+      - name: Deploy on VPS
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
             cd ${{ secrets.SERVER_PATH }}
             docker load < girls-in-armor.tar.gz
-            docker compose down
+            docker compose down || true
             docker compose up -d
             docker container prune -f
             docker image prune -f --filter "dangling=true"

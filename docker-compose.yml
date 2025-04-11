@@ -1,7 +1,7 @@
 services:
   frontend:
     restart: always
-    image: girls-in-armor
+    image: girls-in-armor:latest
     deploy:
       restart_policy:
         condition: on-failure
