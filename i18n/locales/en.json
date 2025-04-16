@@ -1,8 +1,8 @@
 {
 	"home": "Home",
-	"waifu-list": "Waifu List",
+	"waifus": "Waifu List",
 	"moderation": "Moderation",
-	"waifu-create": "Create waifu",
+	"waifus-create": "Create waifu",
 	"login": "Login",
 	"register": "Register",
 	"logout": "Logout",

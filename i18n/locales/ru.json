@@ -1,8 +1,8 @@
 {
 	"home": "Главная",
-	"waifu-list": "Список вайфу",
+	"waifus": "Список вайфу",
 	"moderation": "Модерация",
-	"waifu-create": "Создать вайфу",
+	"waifus-create": "Создать вайфу",
 	"login": "Вход",
 	"register": "Регистрация",
 	"logout": "Выход",
