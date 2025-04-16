@@ -49,76 +49,85 @@
 </script>
 
 <template>
-	<header
-		ref="header"
-		class="header fixed top-0 left-0 z-[100] flex min-h-[52px] w-[100%] items-center"
-		:class="{
-			'transition-all duration-200': isHome,
-			'bg-transparent! text-white!': isHome && currentScrollY < scrollBreakPoint,
-		}"
-	>
-		<UContainer>
-			<div class="flex items-center justify-between gap-4">
-				<div class="flex items-center gap-x-4">
-					<UButton
-						v-if="$route.meta.showBack"
-						class="p-2 hover:bg-inherit"
-						variant="ghost"
-						@click="$router.back()"
-					>
-						<Icon size="24" name="uil:angle-left-b" />
-					</UButton>
-
-					<UButton variant="link" class="focus:outline-none sm:hidden" @click="toggleDrawer">
-						<Icon name="lucide:align-justify" />
-					</UButton>
-
-					<Logo />
-				</div>
-
-				<div class="flex items-center gap-4">
-					<nav class="hidden sm:block">
-						<ul class="flex items-center gap-4">
-							<template v-for="(link, index) in links" :key="index">
-								<li v-if="link.condition">
-									<NuxtLink
-										v-if="link.routeName"
-										:to="{ name: link.routeName }"
-										exact-active-class="exact-link"
-										class="link"
-									>
-										<Icon :name="link.icon" />
-										{{ link.title }}
-									</NuxtLink>
-									<button v-else variant="link" class="link" @click="link.onClick">
-										<Icon :name="link.icon" />
-										{{ link.title }}
-									</button>
-								</li>
-							</template>
-						</ul>
-					</nav>
-
-					<div class="flex gap-2">
+	<div>
+		<header
+			ref="header"
+			class="header fixed top-0 left-0 z-[100] flex min-h-[52px] w-[100%] items-center"
+			:class="{
+				'transition-all duration-200': isHome,
+				'bg-transparent! text-white!': isHome && currentScrollY < scrollBreakPoint,
+			}"
+		>
+			<UContainer>
+				<div class="flex items-center justify-between gap-4">
+					<div class="flex items-center gap-x-4">
 						<UButton
+							v-if="$route.meta.showBack"
+							class="p-2 hover:bg-inherit"
 							variant="ghost"
-							class="text-inherit"
-							size="sm"
-							icon="mdi-translate"
-							@click="changeLocale"
-						/>
-						<UButton
-							variant="ghost"
-							class="text-inherit"
-							icon="mdi-theme-light-dark"
-							size="sm"
-							@click="toggleDark"
-						/>
+							@click="$router.back()"
+						>
+							<Icon size="24" name="uil:angle-left-b" />
+						</UButton>
+
+						<UButton variant="link" class="focus:outline-none sm:hidden" @click="toggleDrawer">
+							<Icon name="lucide:align-justify" />
+						</UButton>
+
+						<Logo />
+					</div>
+
+					<div class="flex items-center gap-4">
+						<nav class="hidden sm:block">
+							<ul class="flex items-center gap-4">
+								<template v-for="(link, index) in links" :key="index">
+									<li v-if="link.condition">
+										<NuxtLink
+											v-if="link.routeName"
+											:to="{ name: link.routeName }"
+											exact-active-class="exact-link"
+											class="link"
+										>
+											<Icon :name="link.icon" />
+											{{ link.title }}
+										</NuxtLink>
+										<button v-else variant="link" class="link" @click="link.onClick">
+											<Icon :name="link.icon" />
+											{{ link.title }}
+										</button>
+									</li>
+								</template>
+							</ul>
+						</nav>
+
+						<div class="flex gap-2">
+							<UButton
+								variant="ghost"
+								class="cursor-pointer text-inherit"
+								size="sm"
+								icon="mdi-translate"
+								@click="changeLocale"
+							/>
+							<UButton
+								variant="ghost"
+								class="cursor-pointer text-inherit"
+								icon="mdi-theme-light-dark"
+								size="sm"
+								@click="toggleDark"
+							/>
+						</div>
 					</div>
 				</div>
-			</div>
-		</UContainer>
-	</header>
+			</UContainer>
+		</header>
+
+		<div
+			:class="{
+				'mb-6 min-h-[52px]': true,
+				hidden: isHome,
+			}"
+		></div>
+	</div>
 </template>
 
 <style>

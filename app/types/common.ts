@@ -6,7 +6,7 @@ export interface Link {
 }
 
 export interface User {
-	_id: string
+	id: number
 	permission: boolean
 	login: string
 	email: string
@@ -24,10 +24,11 @@ export interface SnackbarMessage {
 }
 
 export interface Waifu {
-	_id: string
+	id: number
 	imgUrl: string
 	name: string
 	description: string
+	title: string
 	user: string | User
 	date: string
 }
