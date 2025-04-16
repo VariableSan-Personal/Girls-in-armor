@@ -2,8 +2,10 @@ import { fileURLToPath, URL } from 'node:url'
 
 const meta = {
 	title: 'Girls in Armor',
-	description: '',
-	thumbnail: '',
+	description:
+		'Discover the elegance and strength of armored princesses, showcasing their beauty and resilience in stunning visuals.',
+	thumbnail:
+		'https://firebasestorage.googleapis.com/v0/b/girls-in-armor.appspot.com/o/lone-social%2Fgia bg.jpg?alt=media',
 }
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -49,6 +51,7 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			baseUrl: '/api',
+			waifuItToken: process.env.WAIFU_IT_TOKEN,
 		},
 	},
 
